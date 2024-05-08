@@ -4,6 +4,7 @@ from character import Character
 from obstacle import Obstacle
 from key import Key
 from door import Door
+from floor import Floor
 
 pygame.init()
 pygame.font.init()
@@ -28,13 +29,16 @@ display_message = my_font.render(message, True,(255, 255, 255))
 #
 
 c = Character(0, 480)
-o = Obstacle(325, 50)
+o = Obstacle(125, 450)
 k = Key(100, 50)
-d = Door(300, 480)
+d = Door(350, 485)
+f = Floor(0, 512)
 
 # Booleans
 run = True
 got_key = False
+isJump = False
+y = 10 # a part of jumping
 
 # Main Program Loop
 while run:
@@ -49,6 +53,9 @@ while run:
     if keys[pygame.K_s] or keys[pygame.K_DOWN]:
         c.move_direction("down")
 
+    if keys[pygame.K_SPACE]:
+        isJump = True
+
     # Main Event Loop
     for event in pygame.event.get():  # User did something
         if event.type == pygame.QUIT:  # If user clicked close
@@ -61,5 +68,8 @@ while run:
     screen.blit(display_message, (0, 0))
     screen.blit(c.image, c.rect)
     screen.blit(o.image, o.rect)
+    screen.blit(k.image, k.rect)
+    screen.blit(d.image, d.rect)
+    screen.blit(f.image, f.rect)
 
     pygame.display.update()
