@@ -26,7 +26,7 @@ class Character:
         elif direction == "up":
             self.current_direction = "left"
             self.y = self.y - self.delta
-        elif direction == "down":
-            self.current_direction = "left"
-            self.y = self.y + self.delta
+
+        self.rect = pygame.Rect(self.x, self.y, self.image_size[0], self.image_size[1])
+
 

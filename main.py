@@ -29,6 +29,10 @@ display_message = my_font.render(message, True,(255, 255, 255))
 #
 
 c = Character(0, 480)
+
+c_x = 0
+c_y = 480
+
 o = Obstacle(130, 450)
 o1 = Obstacle(0, 400)
 o2 = Obstacle(260, 400)
@@ -46,6 +50,9 @@ k = Key(295, 90)
 d = Door(350, 485)
 f = Floor(0, 512)
 
+mass = 1
+velocity = 5
+
 # Booleans
 run = True
 got_key = False
@@ -56,17 +63,23 @@ y = 10 # a part of jumping
 while run:
 
     keys = pygame.key.get_pressed()  # checking pressed keys
-    if keys[pygame.Kw_d] or keys[pygame.K_RIGHT]:
+    if keys[pygame.K_RIGHT]:
         c.move_direction("right")
-    if keys[pygame.K_a] or keys[pygame.K_LEFT]:
+    if keys[pygame.K_LEFT]:
         c.move_direction("left")
-    if keys[pygame.K_w] or keys[pygame.K_UP]:
+    if keys[pygame.K_UP]:
         c.move_direction("up")
-    if keys[pygame.K_s] or keys[pygame.K_DOWN]:
-        c.move_direction("down")
 
     if keys[pygame.K_SPACE]:
         isJump = True
+
+    if isJump == True:
+        force = 0.5 * mass * (velocity**2)
+        c_y -= force
+        velocity -= 1
+        mass -= 1
+
+    #if c.rect.colliderect(o1.rect or o2.rect or o3.rect or o4.rect or o5.rect or o6.rect or o7.rect or o8.rect or o9.rect or o10.rect or o11.rect):
 
     # Main Event Loop
     for event in pygame.event.get():  # User did something
@@ -74,6 +87,9 @@ while run:
             run = False
 
     # End of Main Program Loop
+    new_time = time.time()
+    time_diff = new_time - start_time
+    time_text = my_font.render("Time Elapsed: " + str(round(time_diff, 2)) + " s", True, (255, 255, 255))
 
     # Fill Screen and Blit
     screen.fill((r, g, b))
@@ -95,5 +111,6 @@ while run:
     screen.blit(k.image, k.rect)
     screen.blit(d.image, d.rect)
     screen.blit(f.image, f.rect)
+    screen.blit(time_text, (0, 15))
 
     pygame.display.update()
