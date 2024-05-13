@@ -57,8 +57,7 @@ velocity = 5
 run = True
 got_key = False
 isJump = False
-y = 10 # a part of jumping
-
+isFall = False
 # Main Program Loop
 while run:
 
@@ -67,11 +66,14 @@ while run:
         c.move_direction("right")
     if keys[pygame.K_LEFT]:
         c.move_direction("left")
-    if keys[pygame.K_UP]:
-        c.move_direction("up")
 
-    if keys[pygame.K_SPACE]:
-        isJump = True
+    for event in pygame.event.get():  # User did something
+        if event.type == pygame.QUIT:  # If user clicked close
+            run = False
+
+        if keys[pygame.K_SPACE] and event.type == pygame.KEYDOWN:
+            isJump = True
+            #c.jump()
 
     if isJump == True:
         force = 0.5 * mass * (velocity**2)
@@ -79,12 +81,19 @@ while run:
         velocity -= 1
         mass -= 1
 
+        if velocity < 0: # max height
+            mass = -1
+
+        if velocity == -5:
+            isJump = False
+            velocity = 5
+            mass = 1
+
+    pygame.display.update()
+
     #if c.rect.colliderect(o1.rect or o2.rect or o3.rect or o4.rect or o5.rect or o6.rect or o7.rect or o8.rect or o9.rect or o10.rect or o11.rect):
 
     # Main Event Loop
-    for event in pygame.event.get():  # User did something
-        if event.type == pygame.QUIT:  # If user clicked close
-            run = False
 
     # End of Main Program Loop
     new_time = time.time()
