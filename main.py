@@ -23,15 +23,15 @@ screen.fill((r, g, b))
 
 start_time = time.time()
 
+y = 0
+x = 0
+
 #
 message = "Get the key to unlock the door!"
 display_message = my_font.render(message, True,(255, 255, 255))
 #
 
 c = Character(0, 480)
-
-c_x = 0
-c_y = 480
 
 o = Obstacle(130, 450)
 o1 = Obstacle(0, 400)
@@ -50,14 +50,11 @@ k = Key(295, 90)
 d = Door(350, 485)
 f = Floor(0, 512)
 
-mass = 1
-velocity = 5
-
 # Booleans
 run = True
 got_key = False
 isJump = False
-isFall = False
+j = update_jump_count()
 # Main Program Loop
 while run:
 
@@ -66,34 +63,29 @@ while run:
         c.move_direction("right")
     if keys[pygame.K_LEFT]:
         c.move_direction("left")
-
-    for event in pygame.event.get():  # User did something
-        if event.type == pygame.QUIT:  # If user clicked close
-            run = False
-
-        if keys[pygame.K_SPACE] and event.type == pygame.KEYDOWN:
-            isJump = True
-            #c.jump()
-
-    if isJump == True:
-        force = 0.5 * mass * (velocity**2)
-        c_y -= force
-        velocity -= 1
-        mass -= 1
-
-        if velocity < 0: # max height
-            mass = -1
-
-        if velocity == -5:
-            isJump = False
-            velocity = 5
-            mass = 1
-
-    pygame.display.update()
+    #if keys[pygame.K_UP]:
+        #c.move_direction("up")
 
     #if c.rect.colliderect(o1.rect or o2.rect or o3.rect or o4.rect or o5.rect or o6.rect or o7.rect or o8.rect or o9.rect or o10.rect or o11.rect):
 
     # Main Event Loop
+    for event in pygame.event.get():  # User did something
+        if event.type == pygame.QUIT:  # If user clicked close
+            run = False
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            isJump = True
+
+        if isJump == True:
+
+
+            #if jumpCount >= -10:
+                #y -= (jumpCount * abs(jumpCount)) * 0.5
+                #jumpCount -= 1
+            #else:
+                #jumpCount = 10
+                #isJump = False
+
+        pygame.display.update()
 
     # End of Main Program Loop
     new_time = time.time()
