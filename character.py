@@ -16,26 +16,6 @@ class Character:
         self.rect = pygame.Rect(self.x, self.y, self.image_size[0], self.image_size[1])
         self.delta = 0.1
         self.current_direction = "right"
-
-    def update_jump_count(self):
-        self.jump = 1
-
-    def update_jump(self):
-        if self.jump:
-            if self.v > 0:
-                force = 0.5 * self.m * (self.v ** 2)
-            else:
-                force = -(0.5 * self.m * (self.v ** 2))
-
-            self.y -= force
-            self.v -= 1
-
-        if self.y >= 20:
-            self.y = 20
-            self.jump = 0
-            self.v = 5
-
-
     def move_direction(self, direction):
         if self.current_direction == "right" and direction == "left":
             self.image = pygame.transform.flip(self.image, True, False)

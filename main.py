@@ -25,6 +25,8 @@ start_time = time.time()
 
 y = 0
 x = 0
+m = 1
+v = 5
 
 #
 message = "Get the key to unlock the door!"
@@ -53,8 +55,8 @@ f = Floor(0, 512)
 # Booleans
 run = True
 got_key = False
-isJump = False
-j = update_jump_count()
+isJump = 0
+
 # Main Program Loop
 while run:
 
@@ -72,18 +74,19 @@ while run:
     for event in pygame.event.get():  # User did something
         if event.type == pygame.QUIT:  # If user clicked close
             run = False
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            isJump = True
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and isJump == 0:
+            isJump = 1
 
-        if isJump == True:
+        if isJump == 1:
+            vd = 0.5 * m * v**2
+            y -= vd
+            v -=1
+            if v < 0:
+                m = 1
+                v = 5
+                isJump = 0
 
-
-            #if jumpCount >= -10:
-                #y -= (jumpCount * abs(jumpCount)) * 0.5
-                #jumpCount -= 1
-            #else:
-                #jumpCount = 10
-                #isJump = False
+        #pygame.draw.rect(screen, (x, y, 90, 90), 5)
 
         pygame.display.update()
 
