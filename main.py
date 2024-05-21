@@ -25,9 +25,11 @@ start_time = time.time()
 
 y = 0
 x = 0
-m = 1
-v = 5
+y_gravity = 1
+jump_height = 20
+y_velocity = jump_height
 
+clock = pygame.time.Clock()
 #
 message = "Get the key to unlock the door!"
 display_message = my_font.render(message, True,(255, 255, 255))
@@ -55,18 +57,10 @@ f = Floor(0, 512)
 # Booleans
 run = True
 got_key = False
-isJump = 0
+isJump = False
 
 # Main Program Loop
 while run:
-
-    keys = pygame.key.get_pressed()  # checking pressed keys
-    if keys[pygame.K_RIGHT]:
-        c.move_direction("right")
-    if keys[pygame.K_LEFT]:
-        c.move_direction("left")
-    #if keys[pygame.K_UP]:
-        #c.move_direction("up")
 
     #if c.rect.colliderect(o1.rect or o2.rect or o3.rect or o4.rect or o5.rect or o6.rect or o7.rect or o8.rect or o9.rect or o10.rect or o11.rect):
 
@@ -74,21 +68,23 @@ while run:
     for event in pygame.event.get():  # User did something
         if event.type == pygame.QUIT:  # If user clicked close
             run = False
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and isJump == 0:
-            isJump = 1
+        #if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE and isJump == False:
+            #isJump = True
+    keys = pygame.key.get_pressed()  # checking pressed keys
+    if keys[pygame.K_RIGHT]:
+        c.move_direction("right")
+    if keys[pygame.K_LEFT]:
+        c.move_direction("left")
 
-        if isJump == 1:
-            vd = 0.5 * m * v**2
-            y -= vd
-            v -=1
-            if v < 0:
-                m = 1
-                v = 5
-                isJump = 0
+    if keys[pygame.K_SPACE]:
+        isJump = True
 
-        #pygame.draw.rect(screen, (x, y, 90, 90), 5)
-
-        pygame.display.update()
+    if isJump == True:
+        y -= y_velocity
+        y_velocity -= y_gravity
+        if y_velocity < -jump_height:
+            isJump = False
+            y_velocity = jump_height
 
     # End of Main Program Loop
     new_time = time.time()
