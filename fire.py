@@ -1,15 +1,16 @@
 import pygame
 
-class Obstacle:
+class Fire:
 
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.image = pygame.image.load("obstacle.png")
+        self.image = pygame.image.load("fire_spirit.png")
         self.image_size = self.image.get_size()
         self.rect = pygame.Rect(self.x, self.y, self.image_size[0], self.image_size[1])
 
         self.image_size = self.image.get_size()
-        scale_size = (self.image_size[0] * .4, self.image_size[1] * .4)
+        scale_size = (self.image_size[0] * .3, self.image_size[1] * .3)
         self.image = pygame.transform.scale(self.image, scale_size)
         self.image_size = self.image.get_size()
+

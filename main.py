@@ -3,7 +3,8 @@ import time
 from character import Character
 from obstacle import Obstacle
 from key import Key
-from door import Door
+from fire import Fire
+from openedfire import OpenedFire
 from floor import Floor
 
 pygame.init()
@@ -31,11 +32,11 @@ y_velocity = jump_height
 
 clock = pygame.time.Clock()
 #
-message = "Get the key to unlock the door!"
+message = "Get the key!"
 display_message = my_font.render(message, True,(255, 255, 255))
 #
 
-c = Character(0, 480)
+c = Character(0, 455)
 
 o = Obstacle(130, 450)
 o1 = Obstacle(0, 400)
@@ -50,8 +51,9 @@ o9 = Obstacle(130, 150)
 o10 = Obstacle(0, 100)
 o11 = Obstacle(260, 100)
 
-k = Key(295, 90)
-d = Door(350, 485)
+k = Key(310, 70)
+fire = Fire(310, 460)
+oFire = OpenedFire(310, 460)
 f = Floor(0, 512)
 
 # Booleans
@@ -75,6 +77,8 @@ while run:
         c.move_direction("right")
     if keys[pygame.K_LEFT]:
         c.move_direction("left")
+    if keys[pygame.K_UP]:
+        c.move_direction("up")
 
     if keys[pygame.K_SPACE]:
         isJump = True
@@ -85,6 +89,9 @@ while run:
         if y_velocity < -jump_height:
             isJump = False
             y_velocity = jump_height
+
+    if c.rect.colliderect(k.rect):
+        got_key = True
 
     # End of Main Program Loop
     new_time = time.time()
@@ -109,8 +116,11 @@ while run:
     screen.blit(o11.image, o11.rect)
 
     screen.blit(k.image, k.rect)
-    screen.blit(d.image, d.rect)
+    screen.blit(fire.image, fire.rect)
     screen.blit(f.image, f.rect)
     screen.blit(time_text, (0, 15))
+
+    if got_key == True:
+        screen.blit(oFire.image, oFire.rect)
 
     pygame.display.update()
