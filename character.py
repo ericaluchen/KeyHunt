@@ -2,12 +2,6 @@ import pygame
 
 class Character:
 
-    x = 0
-    y = 0
-    jump = 0
-    v = 5
-    m = 1
-
     def __init__(self, x, y):
         self.x = x
         self.y = y

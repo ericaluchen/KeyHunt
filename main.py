@@ -53,7 +53,7 @@ o11 = Obstacle(260, 100)
 
 k = Key(310, 70)
 fire = Fire(310, 460)
-oFire = OpenedFire(310, 460)
+oFire = OpenedFire(290, 440)
 f = Floor(0, 512)
 
 # Booleans
@@ -121,6 +121,14 @@ while run:
     screen.blit(time_text, (0, 15))
 
     if got_key == True:
+        fire = Fire(5000, 5000)
+        screen.blit(fire.image, fire.rect)
         screen.blit(oFire.image, oFire.rect)
+
+    if c.rect.colliderect(oFire.rect):
+        game_over = my_font.render("Good job!", True, (255, 255, 255))
+        screen.fill((r, g, b))
+        screen.blit(time_text, (150, 250))
+        screen.blit(game_over, (150, 220))
 
     pygame.display.update()
