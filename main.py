@@ -51,7 +51,7 @@ o9 = Obstacle(130, 150)
 o10 = Obstacle(0, 100)
 o11 = Obstacle(260, 100)
 
-k = Key(310, 70)
+k = Key(0, 70)
 fire = Fire(310, 460)
 oFire = OpenedFire(290, 440)
 f = Floor(0, 512)
@@ -60,11 +60,13 @@ f = Floor(0, 512)
 run = True
 got_key = False
 isJump = False
+lose = False
 
 # Main Program Loop
 while run:
 
-    #if c.rect.colliderect(o1.rect or o2.rect or o3.rect or o4.rect or o5.rect or o6.rect or o7.rect or o8.rect or o9.rect or o10.rect or o11.rect):
+    if c.rect.colliderect(o1.rect) or c.rect.colliderect(o2.rect) or c.rect.colliderect(o3.rect) or c.rect.colliderect(o4.rect) or c.rect.colliderect(o5.rect) or c.rect.colliderect(o6.rect) or c.rect.colliderect(o7.rect) or c.rect.colliderect(o8.rect) or c.rect.colliderect(o9.rect) or c.rect.colliderect(o10.rect) or c.rect.colliderect(o11.rect):
+        lose = True
 
     # Main Event Loop
     for event in pygame.event.get():  # User did something
@@ -79,6 +81,8 @@ while run:
         c.move_direction("left")
     if keys[pygame.K_UP]:
         c.move_direction("up")
+    if keys[pygame.K_DOWN]:
+        c.move_direction("down")
 
     if keys[pygame.K_SPACE]:
         isJump = True
@@ -94,9 +98,10 @@ while run:
         got_key = True
 
     # End of Main Program Loop
-    new_time = time.time()
-    time_diff = new_time - start_time
-    time_text = my_font.render("Time Elapsed: " + str(round(time_diff, 2)) + " s", True, (255, 255, 255))
+    if not(c.rect.colliderect(oFire.rect)) or lose == True:
+        new_time = time.time()
+        time_diff = new_time - start_time
+        time_text = my_font.render("Time Elapsed: " + str(round(time_diff, 2)) + " s", True, (255, 255, 255))
 
     # Fill Screen and Blit
     screen.fill((r, g, b))
@@ -120,15 +125,21 @@ while run:
     screen.blit(f.image, f.rect)
     screen.blit(time_text, (0, 15))
 
+    if lose == True:
+        lose_message = my_font.render("You lost! (You touched the obstacles)", True, (255, 255, 255))
+        screen.fill((r, g, b))
+        screen.blit(time_text, (150, 250))
+        screen.blit(lose_message, (150, 220))
+
     if got_key == True:
         fire = Fire(5000, 5000)
         screen.blit(fire.image, fire.rect)
         screen.blit(oFire.image, oFire.rect)
 
-    if c.rect.colliderect(oFire.rect):
-        game_over = my_font.render("Good job!", True, (255, 255, 255))
-        screen.fill((r, g, b))
-        screen.blit(time_text, (150, 250))
-        screen.blit(game_over, (150, 220))
+        if c.rect.colliderect(oFire.rect):
+            game_over = my_font.render("Good job!", True, (255, 255, 255))
+            screen.fill((r, g, b))
+            screen.blit(time_text, (150, 250))
+            screen.blit(game_over, (150, 220))
 
     pygame.display.update()
