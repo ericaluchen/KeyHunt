@@ -32,11 +32,11 @@ y_velocity = jump_height
 
 clock = pygame.time.Clock()
 #
-message = "Get the key!"
+message = "Get the key! (the yellow rectangle)"
 display_message = my_font.render(message, True,(255, 255, 255))
 #
 
-c = Character(0, 455)
+c = Character(0, 471)
 
 o = Obstacle(130, 450)
 o1 = Obstacle(0, 400)
@@ -96,9 +96,10 @@ while run:
 
     if c.rect.colliderect(k.rect):
         got_key = True
+        got_key_message = my_font.render("You got the key", True,(255, 255, 255))
 
     # End of Main Program Loop
-    if not(c.rect.colliderect(oFire.rect)) or lose == True:
+    if not(c.rect.colliderect(oFire.rect)):
         new_time = time.time()
         time_diff = new_time - start_time
         time_text = my_font.render("Time Elapsed: " + str(round(time_diff, 2)) + " s", True, (255, 255, 255))
@@ -128,13 +129,13 @@ while run:
     if lose == True:
         lose_message = my_font.render("You lost! (You touched the obstacles)", True, (255, 255, 255))
         screen.fill((r, g, b))
-        screen.blit(time_text, (150, 250))
         screen.blit(lose_message, (150, 220))
 
     if got_key == True:
         fire = Fire(5000, 5000)
         screen.blit(fire.image, fire.rect)
         screen.blit(oFire.image, oFire.rect)
+        screen.blit(got_key_message, (280, 0))
 
         if c.rect.colliderect(oFire.rect):
             game_over = my_font.render("Good job!", True, (255, 255, 255))

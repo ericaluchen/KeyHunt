@@ -11,7 +11,7 @@ class Character:
         self.delta = 0.1
         self.current_direction = "right"
         self.image_size = self.image.get_size()
-        scale_size = (self.image_size[0] * .3, self.image_size[1] * .3)
+        scale_size = (self.image_size[0] * .2, self.image_size[1] * .2)
         self.image = pygame.transform.scale(self.image, scale_size)
         self.image_size = self.image.get_size()
 
