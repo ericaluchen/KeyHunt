@@ -51,9 +51,9 @@ o9 = Obstacle(130, 150)
 o10 = Obstacle(0, 100)
 o11 = Obstacle(260, 100)
 
-k = Key(0, 70)
+k = Key(0, 60)
 fire = Fire(310, 460)
-oFire = OpenedFire(290, 440)
+oFire = OpenedFire(270, 420)
 f = Floor(0, 512)
 
 # Booleans
@@ -96,7 +96,7 @@ while run:
 
     if c.rect.colliderect(k.rect):
         got_key = True
-        got_key_message = my_font.render("You got the key", True,(255, 255, 255))
+        got_key_message = my_font.render("Now go through the fire", True, (255, 255, 255))
 
     # End of Main Program Loop
     if not(c.rect.colliderect(oFire.rect)):
@@ -135,7 +135,7 @@ while run:
         fire = Fire(5000, 5000)
         screen.blit(fire.image, fire.rect)
         screen.blit(oFire.image, oFire.rect)
-        screen.blit(got_key_message, (280, 0))
+        screen.blit(got_key_message, (240, 0))
 
         if c.rect.colliderect(oFire.rect):
             game_over = my_font.render("Good job!", True, (255, 255, 255))
